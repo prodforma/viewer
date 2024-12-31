@@ -5,109 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TON Wallet Tracker</title>
     <style>
-        /* Основной стиль для всей страницы */
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #000000; /* Черный фон */
-            color: #FFFFFF; /* Белый текст */
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
-        /* Фиксированная плашка заголовка */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
+            background-color: #4b0082; /* Темно-фиолетовый */
             width: 100%;
-            background-color: #4B0082; /* Темно-фиолетовый цвет */
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            color: white;
             font-size: 24px;
             font-weight: bold;
-            z-index: 1000;
+            color: #fff;
         }
-
-        /* Основной контейнер */
-        main {
-            margin-top: 70px; /* Отступ для учета фиксированного заголовка */
-            padding: 20px;
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
-
-        /* Секция добавления кошелька */
-        section {
-            margin-bottom: 20px;
-            background: #1a1a1a; /* Темный фон */
+        .section {
+            background-color: #1a1a1a;
+            padding: 15px;
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-
-        h2 {
+        .section h2 {
             margin-top: 0;
-            color: #9370DB; /* Светло-фиолетовый */
+            color: #fff;
         }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
-
-        li {
-            background: #262626;
-            margin: 10px 0;
+        .form input {
             padding: 10px;
             border-radius: 5px;
+            border: none;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .form button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            background-color: #4b0082; /* Темно-фиолетовый */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .form button:hover {
+            background-color: #6a0dad;
+            box-shadow: 0 0 10px #4b0082;
+        }
+        .wallet-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+        .wallet-list li {
+            background-color: #333;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-
-        button {
-            background-color: #4B0082; /* Темно-фиолетовый цвет */
-            color: white;
+        .wallet-list button {
+            background-color: #ff4d4d;
             border: none;
-            padding: 10px 15px;
+            color: white;
+            padding: 5px 10px;
             border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, box-shadow 0.3s;
         }
-
-        button:hover {
-            background-color: #5D3FD3; /* Более светлый фиолетовый */
+        .wallet-list button:hover {
+            background-color: #ff1a1a;
+            box-shadow: 0 0 10px #ff4d4d;
         }
-
-        input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .logo img {
+            width: 100px;
+            height: 100px;
             margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
         }
-
-        #transactionMessages {
-            margin-top: 20px;
-            background: #1a1a1a;
+        .time-widget {
+            text-align: center;
+            font-size: 24px;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
             border-radius: 8px;
-            padding: 20px;
-            max-height: 200px;
-            overflow-y: auto;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
-
-        /* Адаптация для мобильных устройств */
-        @media (max-width: 600px) {
-            button {
-                font-size: 14px;
-                padding: 8px 10px;
-            }
-
-            input[type="text"] {
-                font-size: 14px;
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -116,115 +131,103 @@
     <header>
         TON Wallet Tracker
     </header>
-    <main>
-        <section id="addWalletSection">
-            <h2>Добавить новый кошелек</h2>
-            <input type="text" id="walletAddress" placeholder="Введите адрес кошелька">
-            <button id="saveWalletBtn">Сохранить</button>
-        </section>
-        <section id="wallets">
-            <h2>Отслеживаемые кошельки</h2>
-            <ul id="walletList">
-                <!-- Кошельки добавляются динамически -->
-            </ul>
-        </section>
-        <section id="transactionMessages">
-            <h2>Сообщения о транзакциях</h2>
-            <div id="messages"></div>
-        </section>
-    </main>
+
+    <div class="container">
+        <!-- Форма добавления нового кошелька -->
+        <div class="section">
+            <h2>Add New Wallet</h2>
+            <form id="addWalletForm" class="form">
+                <input type="text" id="walletInput" placeholder="Enter wallet address" required>
+                <button type="submit">Add Wallet</button>
+            </form>
+        </div>
+
+        <!-- Список отслеживаемых кошельков -->
+        <div class="section">
+            <h2>Tracked Wallets</h2>
+            <ul id="walletList" class="wallet-list"></ul>
+        </div>
+
+        <!-- Логотип TON -->
+        <div class="section logo">
+            <img src="image 69.png" alt="TON Logo">
+            <p>The Open Network (TON)</p>
+        </div>
+
+        <!-- Секция отображения графика TON -->
+        <div class="section">
+            <h2>TON Exchange Rate</h2>
+            <iframe src="https://ru.tradingview.com/widgetembed/?frameElementId=tradingview_0f6e0&symbol=TONCOINUSDT&interval=D&hidesidetoolbar=1&hidetoptoolbar=1&withdateranges=1&theme=dark" allowfullscreen></iframe>
+        </div>
+
+        <!-- Секция про блокчейн -->
+        <div class="section">
+            <h2>About Blockchain</h2>
+            <p>Blockchain is a distributed ledger technology that ensures secure and transparent transactions, forming the backbone of modern cryptocurrencies like TON.</p>
+        </div>
+
+        <!-- Виджет времени -->
+        <div class="section time-widget">
+            <h2>Current Time</h2>
+            <p id="time"></p>
+        </div>
+    </div>
+
     <script>
-        const API_URL = "https://tonconsole.com/"; // Базовый URL API
-        const API_KEY = "1"; // Ваш API-ключ
+        // Локальное хранилище для отслеживания кошельков
+        const walletList = document.getElementById('walletList');
+        const addWalletForm = document.getElementById('addWalletForm');
+        const walletInput = document.getElementById('walletInput');
+        const wallets = JSON.parse(localStorage.getItem('wallets')) || [];
 
-        const walletList = document.getElementById('walletList'); // Список кошельков
-        const addWalletSection = document.getElementById('addWalletSection'); // Секция добавления кошельков
-        const saveWalletBtn = document.getElementById('saveWalletBtn'); // Кнопка сохранения кошелька
-        const walletAddressInput = document.getElementById('walletAddress'); // Поле ввода адреса
-        const messagesDiv = document.getElementById('messages'); // Окно сообщений о транзакциях
-
-        let wallets = JSON.parse(localStorage.getItem('wallets')) || []; // Сохраненные кошельки
-        const processedTransactions = {}; // Обработанные транзакции
-
-        // Отображение списка кошельков
-        function renderWallets() {
+        // Функция для обновления списка кошельков
+        function updateWalletList() {
             walletList.innerHTML = '';
             wallets.forEach((wallet, index) => {
-                const listItem = document.createElement('li');
-                listItem.textContent = wallet;
-                const removeBtn = document.createElement('button');
-                removeBtn.textContent = 'Удалить';
-                removeBtn.onclick = () => {
+                const li = document.createElement('li');
+                li.textContent = wallet;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = () => {
                     wallets.splice(index, 1);
                     localStorage.setItem('wallets', JSON.stringify(wallets));
-                    renderWallets();
+                    updateWalletList();
                 };
-                listItem.appendChild(removeBtn);
-                walletList.appendChild(listItem);
+
+                li.appendChild(deleteButton);
+                walletList.appendChild(li);
             });
         }
 
-        // Сохранение нового кошелька
-        saveWalletBtn.addEventListener('click', () => {
-            const walletAddress = walletAddressInput.value.trim();
+        // Обработчик для добавления нового кошелька
+        addWalletForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const walletAddress = walletInput.value.trim();
             if (walletAddress && !wallets.includes(walletAddress)) {
                 wallets.push(walletAddress);
                 localStorage.setItem('wallets', JSON.stringify(wallets));
-                renderWallets();
-                walletAddressInput.value = '';
+                updateWalletList();
+                walletInput.value = '';
+            } else {
+                alert('Invalid or duplicate wallet address.');
             }
         });
 
-        // Функция для отображения сообщений о транзакциях
-        function showTransactionMessage(wallet, amount, time) {
-            const message = document.createElement('div');
-            message.textContent = `Кошелек ${wallet} получил ${amount} TON в ${time}`;
-            messagesDiv.appendChild(message);
+        // Инициализация списка кошельков
+        updateWalletList();
 
-            // Автопрокрутка вниз при добавлении нового сообщения
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        // Функция для отображения времени
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('time').textContent = timeString;
         }
 
-        // Функция для получения транзакций
-        async function fetchTransactions(wallet) {
-            try {
-                const response = await fetch(`${API_URL}/getTransactions?address=${wallet}`, {
-                    headers: {
-                        Authorization: `Bearer ${API_KEY}`,
-                    },
-                });
-                const data = await response.json();
-                return data.result || [];
-            } catch (error) {
-                console.error(`Ошибка получения транзакций для кошелька ${wallet}:`, error);
-                return [];
-            }
-        }
-
-        // Проверка транзакций для всех кошельков
-        async function checkTransactions() {
-            for (const wallet of wallets) {
-                const transactions = await fetchTransactions(wallet);
-
-                transactions.forEach((tx) => {
-                    if (!processedTransactions[wallet]?.includes(tx.id)) {
-                        const amount = tx.amount / 1e9; // Преобразование нанотонов в ТОНы
-                        const time = new Date(tx.time * 1000).toLocaleString(); // Форматирование времени
-                        showTransactionMessage(wallet, amount, time);
-
-                        // Сохранение ID обработанной транзакции
-                        if (!processedTransactions[wallet]) processedTransactions[wallet] = [];
-                        processedTransactions[wallet].push(tx.id);
-                    }
-                });
-            }
-        }
-
-        // Запуск проверки транзакций каждые 60 секунд
-        setInterval(checkTransactions, 60000);
-
-        // Инициализация
-        renderWallets();
+        // Обновляем время каждую секунду
+        setInterval(updateTime, 1000);
+        updateTime();
     </script>
 </body>
 </html>
+
